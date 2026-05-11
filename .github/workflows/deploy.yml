@@ -1,0 +1,52 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ✅ FIX: Use correct Node version
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Install & build
+      - name: Install dependencies
+        run: bun install
+        working-directory: ./web/astro-site
+
+      - name: Build project
+        run: bun run build
+        working-directory: ./web/astro-site
+
+      # Copy dist to server
+      - name: Copy dist to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: own3.aganitha.ai
+          username: brajat
+          port: 2322
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          source: "web/astro-site/dist"
+          target: "~/astro-dist"
+
+      # Update running container
+      - name: Update running container
+        uses: appleboy/ssh-action@v1
+        with:
+          host: own3.aganitha.ai
+          username: brajat
+          port: 2322
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            docker exec astro-blog rm -rf /usr/share/nginx/html/*
+            docker cp ~/astro-dist/web/astro-site/dist/. astro-blog:/usr/share/nginx/html/
