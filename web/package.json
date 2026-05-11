@@ -1,0 +1,71 @@
+{
+  "name": "book-cli-rajat",
+  "version": "0.1.1",
+  "main": "dist/cli.js",
+  "bin": {
+    "book-cli": "./dist/cli.js"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "build:cli": "bun build src/lib/cli.ts --compile --outfile dist/book-cli",
+    "start": "next start",
+    "lint": "eslint",
+    "cli": "bun run src/lib/cli.ts"
+  },
+  "dependencies": {
+    "@aganitha/atk-config": "^3.4.0",
+    "@aganitha/atk-debug": "1.2.0",
+    "@aganitha/authentication-component": "1.11.0",
+    "@ai-sdk/google": "^3.0.67",
+    "@ai-sdk/react": "^3.0.177",
+    "@rollup/plugin-commonjs": "^29.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@types/nodemailer": "^8.0.0",
+    "ai": "^6.0.175",
+    "autoprefixer": "^10.5.0",
+    "chalk": "^5.6.2",
+    "cli-table3": "^0.6.5",
+    "commander": "^14.0.3",
+    "docx": "^9.6.1",
+    "execa": "^9.6.1",
+    "ldapjs": "^3.0.7",
+    "next": "^16.2.4",
+    "next-auth": "^4.24.14",
+    "nodemailer": "^8.0.7",
+    "ora": "^9.4.0",
+    "pino": "^10.3.1",
+    "postcss": "^8.5.13",
+    "pptxgenjs": "^4.0.1",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-icons": "^5.6.0",
+    "rollup": "^4.60.2",
+    "rollup-plugin-dts": "^6.4.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/ldapjs": "^3.0.6",
+    "@types/node": "^20",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19",
+    "babel-plugin-react-compiler": "1.0.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.4",
+    "tailwindcss": "^4.2.4",
+    "typescript": "^6.0.3"
+  },
+  "ignoreScripts": [
+    "sharp",
+    "unrs-resolver"
+  ],
+  "trustedDependencies": [
+    "sharp",
+    "unrs-resolver"
+  ],
+  "files": [
+    "dist"
+  ]
+}

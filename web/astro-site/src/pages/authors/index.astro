@@ -1,0 +1,25 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import AuthorCard from "../../components/AuthorCard.astro";
+import { getCollection } from "astro:content";
+
+const authors = await getCollection("authors");
+---
+
+<Layout title="Authors — BookHub">
+  <section class="bg-slate-50 py-16">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {
+          authors.map((author) => (
+            <AuthorCard
+              id={author.id}
+              name={author.data.name}
+              bio={author.data.bio}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>

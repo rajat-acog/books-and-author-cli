@@ -1,0 +1,33 @@
+{
+  "brajat@aganitha.ai": {
+    "style": "funny",
+    "length": "medium",
+    "format": "bullet",
+    "history": [
+      "William Gay",
+      "Jane Austen",
+      "r",
+      "chethan bhagath",
+      "george orwell",
+      "rajat"
+    ],
+    "limit": 40,
+    "author": "r",
+    "title": "Twilight"
+  },
+  "rbhapri20000@gmail.com": {
+    "history": [
+      "George orwell",
+      "sathish"
+    ],
+    "limit": 5
+  },
+  "rbhapri2000@gmail.com": {
+    "history": [
+      "Aldous huxley",
+      "Franz kafka"
+    ],
+    "limit": 5,
+    "style": "haiku"
+  }
+}

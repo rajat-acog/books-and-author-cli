@@ -1,0 +1,53 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import BookCard from "../../components/BookCard.astro";
+import { getCollection } from "astro:content";
+
+const authors = await getCollection("authors");
+
+const books = authors.flatMap((author) =>
+  author.data.books.map((book) => ({
+    ...book,
+    author: author.data.name,
+    authorSlug: author.id,
+    id:
+      book.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-"),
+  })),
+);
+---
+
+<Layout title="Books — BookHub">
+  <section class="bg-slate-50 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl text-center mx-auto mb-12">
+        <p class="text-sm uppercase tracking-[0.24em] text-indigo-600">
+          Library overview
+        </p>
+        <h1 class="mt-4 text-4xl font-semibold text-slate-900 sm:text-5xl">
+          Explore every title in the collection.
+        </h1>
+        <p class="mt-4 text-base leading-7 text-slate-600">
+          Browse a calm, professional catalogue of books designed for reading
+          pleasure.
+        </p>
+      </div>
+
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {
+          books.map((book) => (
+            <BookCard
+              id={book.id}
+              title={book.title}
+              author={book.author}
+              coverUrl={book.coverUrl}
+              year={book.year}
+              summary={book.summary}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>

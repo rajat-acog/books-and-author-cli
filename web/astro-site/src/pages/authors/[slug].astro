@@ -1,0 +1,58 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import BookCard from "../../components/BookCard.astro";
+import { getCollection, getEntry } from "astro:content";
+import { marked } from "marked";
+
+export async function getStaticPaths() {
+  const authors = await getCollection("authors");
+
+  return authors.map((author) => ({
+    params: {
+      slug: author.id,
+    },
+  }));
+}
+
+const { slug } = Astro.params;
+
+const author = await getEntry("authors", slug!);
+
+if (!author) {
+  throw new Error("Author not found");
+}
+
+const authorBooks = author.data.books;
+---
+
+<Layout title={`${author.data.name} - BookHub`}>
+  <div class="max-w-7xl mx-auto px-4 py-12">
+    <div
+      class="bg-white rounded-3xl shadow-sm border border-slate-200 p-10 mb-12"
+    >
+      <h1 class="text-5xl font-semibold text-slate-900 mb-6">
+        {author.data.name}
+      </h1>
+
+      <p class="text-lg leading-8 text-slate-700">
+        {author.data.bio}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {
+        authorBooks.map((book) => (
+          <BookCard
+            id={book.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}
+            title={book.title}
+            author={author.data.name}
+            coverUrl={book.coverUrl}
+            year={book.year}
+            summary={book.summary}
+            href={`/books/${book.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+          />
+        ))
+      }
+    </div>
+  </div>
+</Layout>
