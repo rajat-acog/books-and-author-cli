@@ -13,20 +13,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # ✅ FIX: Use correct Node version
+      # Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      # Install & build
-      - name: Install dependencies
-        run: bun install
-        working-directory: ./web/astro-site
+      # ✅ Install Bun
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
 
-      - name: Build project
-        run: bun run build
+      # Install dependencies
+      - name: Install dependencies
         working-directory: ./web/astro-site
+        run: bun install
+
+      # Build Astro
+      - name: Build project
+        working-directory: ./web/astro-site
+        run: bun run build
 
       # Copy dist to server
       - name: Copy dist to server
@@ -39,7 +46,7 @@ jobs:
           source: "web/astro-site/dist"
           target: "~/astro-dist"
 
-      # Update running container
+      # Deploy into container
       - name: Update running container
         uses: appleboy/ssh-action@v1
         with:
